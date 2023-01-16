@@ -123,19 +123,25 @@ pnode Find(int number, pnode head)
     return NULL;
 }
 
-void insertNode(pnode head)
+void InsertNode(pnode head)
 {
     int numOfNode = 0;
     scanf("%d", &numOfNode);
-    pnode nodeToInsert = Find(numOfNode, head);
+    int didExist = 0;
 
-    int firstNumber = 0;
-    int secondNumber = 0;
-    // while ()
+    while (head->next != NULL)
     {
-        /* code */
+        if(head->next->node_num == numOfNode)
+        {
+            didExist = 1;
+            break;
+        }
+        head = head->next;
     }
+    
+    
 }
+
 void PrintGraph(pnode head)
 {
     pnode current = head;

@@ -33,11 +33,10 @@ int main()
             }
             PrintGraph(head);
             printf("Everybody was kungfu fightinggggg\n");
-            FreeGraph(head);
         }
         if (choice == 'B')
         {
-            insertNode(head);
+            InsertNode(head);
         }
         if (choice == 'D')
         {
@@ -51,6 +50,8 @@ int main()
         {
             printf("I love shoval\n");
         }
+        PrintGraph(head);
+        FreeGraph(head);
         return 0;
     }
 }

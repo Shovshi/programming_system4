@@ -30,7 +30,7 @@ char InsertEdges(pnode head);
 void FreeGraph(pnode head);
 void CreateGraph(pnode head);
 void FreeEdges(pedge head);
-void insertNode(pnode head);
+void InsertNode(pnode head);
 void PrintGraph(pnode head);
 
 #endif
