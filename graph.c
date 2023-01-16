@@ -12,7 +12,7 @@ void CreateGraph(pnode head)
     for (int i = 1; i < numOfNodes; i++)
     {
         pnode next = NULL;
-        next = malloc(sizeof(pnode));
+        next = malloc(sizeof(node));
         if (next == NULL)
         {
             exit(1);
@@ -59,7 +59,7 @@ char InsertEdges(pnode head)
     printf("NODE TO WORK ON:\n");
     scanf(" %d", &nodeNumber);
     pnode curr = Find(nodeNumber, head);
-    
+    printf("THE NODE IS %d\n", curr->node_num);
 
 
     pedge graphEdge = NULL;
@@ -69,7 +69,7 @@ char InsertEdges(pnode head)
         exit(1);
     }
 
-    (*curr).edges = graphEdge;
+    curr->edges = graphEdge;
 
     while (1)
     {
@@ -81,40 +81,40 @@ char InsertEdges(pnode head)
         }
         scanf(" %c", &secondNumber);
         secondNumber = secondNumber - '0';
-        pnode nodeNumber = NULL;
-        nodeNumber = Find(firstNumber, head);
+        pnode nodeNumber = Find(firstNumber, head);
+        graphEdge->endpoint =  NULL;
         graphEdge->endpoint = nodeNumber;
         graphEdge->weight = secondNumber;
 
+        printf("THIS IS NODENUMBER %d\n", nodeNumber->node_num);
+        printf("THIS IS WEIGHT: %d\n", secondNumber);
         pedge nextEdge = NULL;
         nextEdge = malloc(sizeof(edge));
         if (nextEdge == NULL)
         {
             exit(1);
         }
+
         graphEdge->next = nextEdge;
         graphEdge = graphEdge->next;
     }
+    free(graphEdge);
     PrintGraph(head);
 
 }
 
 pnode Find(int number, pnode head)
 {
-    printf("number %d\n", number);
-    while (head->next != NULL)
+    pnode curr = head;
+    while (curr != NULL)
     {
-        if (head->node_num == number)
+        if (curr->node_num == number)
         {
-            printf("FDSFDSF %d\n" , head->node_num);
-            return head;
+            return curr;
         }
-        else
-        {
-            head = head->next;
-        }
+        curr=curr->next; 
     }
-    return head;
+    return NULL;
 }
 
 void insertNode(pnode head)
@@ -132,7 +132,7 @@ void insertNode(pnode head)
 }
 void PrintGraph(pnode head)
 {
-    pnode current = head;
+    /*pnode current = head;
     pedge edge = head->edges;
 
     while (current != NULL)
@@ -146,5 +146,48 @@ void PrintGraph(pnode head)
         }
         current = current->next;
         printf("\n");
+    }*/
+
+    pedge currEdge = NULL;
+
+    if(head==NULL)
+    {
+        printf("The graph is empty!\n");
+        return;
     }
+
+    while(head != NULL)
+    {
+        pedge currEdge = NULL;
+
+    if (head == NULL)
+    {
+        printf("The graph is empty!\n");
+        return;
+    }
+
+    while (head != NULL)
+    {
+        currEdge = head->edges;
+
+        printf("Node #%d:\n", head->node_num);
+
+        if(currEdge == NULL)
+            printf("No edges are coming out from the node.\n");
+
+        else
+        {
+            while (currEdge != NULL)
+            {
+                printf("w(%d,%d) = %d\n", head->node_num, currEdge->endpoint->node_num, currEdge->weight);
+                currEdge = currEdge->next;
+
+                if (currEdge != NULL)
+                    printf(",");
+            }
+        }
+        printf("\n");
+        head = head->next;
+    }
+}
 }

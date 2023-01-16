@@ -27,7 +27,6 @@ int main()
                 {
                    choice = InsertEdges(head);
                 }
-                
             }
             PrintGraph(head);
             printf("Everybody was kungfu fightinggggg\n");
