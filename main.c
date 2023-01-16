@@ -12,6 +12,9 @@ int main()
         if (choice == 'A')
         {
             head = (malloc(sizeof(node)));
+            head->edges = NULL;
+            head->next = NULL;
+            head->node_num = 0;
             if(head == NULL)
             {
                 printf("Malloc failed\n");

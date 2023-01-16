@@ -13,6 +13,10 @@ void CreateGraph(pnode head)
     {
         pnode next = NULL;
         next = malloc(sizeof(node));
+        next->edges = NULL;
+        next->next = NULL;
+        next->node_num = 0;
+
         if (next == NULL)
         {
             exit(1);
@@ -25,29 +29,25 @@ void CreateGraph(pnode head)
 
 void FreeGraph(pnode head)
 {
-    pnode t = head;
-    pnode t2 = head;
-    while (t->next != NULL)
+    while (head != NULL) 
     {
-        t = t->next;
-        FreeEdges(t2->edges);
-        free(t2);
-        t2 = t2->next;
-    }
-    free(t);
+        pnode temp = head;
+        FreeEdges(temp->edges);
+        head = head->next;
+        free(temp);
+        if(head == NULL) return;
+    }    
 }
 
 void FreeEdges(pedge head)
 {
-    pedge t = head;
-    pedge t2 = head;
-    while (t->next != NULL)
+    while (head != NULL) 
     {
-        t = t->next;
-        free(t2);
-        t2 = t2->next;
-    }
-    free(t);
+        pedge temp = head;
+        head = head->next;
+        free(temp);
+        if(head == NULL) return;
+    }    
 }
 
 char InsertEdges(pnode head)
@@ -59,7 +59,7 @@ char InsertEdges(pnode head)
     printf("NODE TO WORK ON:\n");
     scanf(" %d", &nodeNumber);
     pnode curr = Find(nodeNumber, head);
-    printf("THE NODE IS %d\n", curr->node_num);
+    //printf("THE NODE IS %d\n", curr->node_num);
 
 
     pedge graphEdge = NULL;
@@ -68,6 +68,9 @@ char InsertEdges(pnode head)
     {
         exit(1);
     }
+    graphEdge->endpoint = NULL;
+    graphEdge->next = NULL;
+    graphEdge->weight = 0;
 
     curr->edges = graphEdge;
 
@@ -82,25 +85,28 @@ char InsertEdges(pnode head)
         scanf(" %c", &secondNumber);
         secondNumber = secondNumber - '0';
         pnode nodeNumber = Find(firstNumber, head);
+
         graphEdge->endpoint =  NULL;
+        graphEdge->weight = 0;
         graphEdge->endpoint = nodeNumber;
+        graphEdge->endpoint->node_num = nodeNumber->node_num;
         graphEdge->weight = secondNumber;
 
         printf("THIS IS NODENUMBER %d\n", nodeNumber->node_num);
         printf("THIS IS WEIGHT: %d\n", secondNumber);
         pedge nextEdge = NULL;
         nextEdge = malloc(sizeof(edge));
+        nextEdge->endpoint = NULL;
+        nextEdge->next = 0;
+        nextEdge->weight = 0;
         if (nextEdge == NULL)
         {
             exit(1);
         }
 
         graphEdge->next = nextEdge;
-        graphEdge = graphEdge->next;
+        graphEdge = nextEdge;
     }
-    free(graphEdge);
-    PrintGraph(head);
-
 }
 
 pnode Find(int number, pnode head)
@@ -132,7 +138,7 @@ void insertNode(pnode head)
 }
 void PrintGraph(pnode head)
 {
-    /*pnode current = head;
+    pnode current = head;
     pedge edge = head->edges;
 
     while (current != NULL)
@@ -143,51 +149,18 @@ void PrintGraph(pnode head)
             printf("Weight: %d,", edge->weight);
             printf("To node number: %d,", edge->endpoint->node_num);
             edge = edge->next;
-        }
+        }            
         current = current->next;
-        printf("\n");
-    }*/
-
-    pedge currEdge = NULL;
-
-    if(head==NULL)
-    {
-        printf("The graph is empty!\n");
-        return;
-    }
-
-    while(head != NULL)
-    {
-        pedge currEdge = NULL;
-
-    if (head == NULL)
-    {
-        printf("The graph is empty!\n");
-        return;
-    }
-
-    while (head != NULL)
-    {
-        currEdge = head->edges;
-
-        printf("Node #%d:\n", head->node_num);
-
-        if(currEdge == NULL)
-            printf("No edges are coming out from the node.\n");
-
+        if(current->edges != NULL)
+        {
+            edge = current->edges;
+        }
         else
         {
-            while (currEdge != NULL)
-            {
-                printf("w(%d,%d) = %d\n", head->node_num, currEdge->endpoint->node_num, currEdge->weight);
-                currEdge = currEdge->next;
-
-                if (currEdge != NULL)
-                    printf(",");
-            }
+            break;
         }
+
         printf("\n");
-        head = head->next;
     }
 }
-}
+
