@@ -23,20 +23,12 @@ int main()
             else
             {
                 CreateGraph(head);
-                scanf(" %c", &choice);
-                printf("THIS IS CHOICE : %c\n", choice);
-                
-                while (choice == 'n')
-                {
-                   choice = InsertEdges(head);
-                }
             }
-            PrintGraph(head);
             printf("Everybody was kungfu fightinggggg\n");
         }
         if (choice == 'B')
         {
-            InsertNode(head);
+            InsertEdges(head);
         }
         if (choice == 'D')
         {
@@ -50,8 +42,12 @@ int main()
         {
             printf("I love shoval\n");
         }
-        PrintGraph(head);
-        FreeGraph(head);
-        return 0;
-    }
+        if (choice == 'n')
+        {
+            InsertEdges(head);
+        }
+    }            PrintGraph(head);
+
+    FreeGraph(head);
+    return 0;
 }

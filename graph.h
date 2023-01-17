@@ -26,7 +26,7 @@ void shortsPath_cmd(pnode head);
 void TSP_cmd(pnode head);
 
 pnode Find(int number , pnode head);
-char InsertEdges(pnode head);
+void InsertEdges(pnode head);
 void FreeGraph(pnode head);
 void CreateGraph(pnode head);
 void FreeEdges(pedge head);

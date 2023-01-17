@@ -13,14 +13,13 @@ void CreateGraph(pnode head)
     {
         pnode next = NULL;
         next = malloc(sizeof(node));
+        if (next == NULL)
+            {
+                exit(1);
+            }
         next->edges = NULL;
         next->next = NULL;
-        next->node_num = 0;
-
-        if (next == NULL)
-        {
-            exit(1);
-        }
+        
         (next)->node_num = i;
         (temp)->next = next;
         temp = (temp)->next;
@@ -50,17 +49,25 @@ void FreeEdges(pedge head)
     }    
 }
 
-char InsertEdges(pnode head)
+void InsertEdges(pnode head)
 {
-    char firstNumber = 0;
-    char secondNumber = 0;
+    int firstNumber = 0;
+    int secondNumber = 0;
     int nodeNumber = 0;
 
     printf("NODE TO WORK ON:\n");
     scanf(" %d", &nodeNumber);
     pnode curr = Find(nodeNumber, head);
+    if (curr == NULL)
+    {
+        printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+    }
     //printf("THE NODE IS %d\n", curr->node_num);
-
+    if(curr->edges != NULL)
+    {
+        FreeEdges(curr->edges);
+    }
+    printf("test\n");
 
     pedge graphEdge = NULL;
     graphEdge = malloc(sizeof(edge));
@@ -76,18 +83,14 @@ char InsertEdges(pnode head)
 
     while (1)
     {
-        scanf(" %c", &firstNumber);
-        firstNumber = firstNumber - '0';
-        if (firstNumber < 0 || firstNumber >= 9)
+        if (scanf(" %d", &firstNumber) == 0)
         {
-            return firstNumber + '0';
+            return;
         }
-        scanf(" %c", &secondNumber);
-        secondNumber = secondNumber - '0';
+
+        scanf(" %d", &secondNumber);
         pnode nodeNumber = Find(firstNumber, head);
 
-        graphEdge->endpoint =  NULL;
-        graphEdge->weight = 0;
         graphEdge->endpoint = nodeNumber;
         graphEdge->endpoint->node_num = nodeNumber->node_num;
         graphEdge->weight = secondNumber;
@@ -118,9 +121,22 @@ pnode Find(int number, pnode head)
         {
             return curr;
         }
+        if (curr->next == NULL)
+        {     
+            pnode newNode; 
+            newNode = malloc(sizeof(node));
+            if (newNode == NULL)
+                {
+                    exit(1);
+                }
+            newNode->edges = NULL;
+            newNode->next = NULL;
+            newNode->node_num = number;
+            curr->next = newNode;
+            return newNode;
+        }
         curr=curr->next; 
     }
-    return NULL;
 }
 
 void InsertNode(pnode head)
@@ -138,8 +154,7 @@ void InsertNode(pnode head)
         }
         head = head->next;
     }
-    
-    
+
 }
 
 void PrintGraph(pnode head)
@@ -149,21 +164,27 @@ void PrintGraph(pnode head)
 
     while (current != NULL)
     {
-        printf("THIS IS NODE NUMBER: %d    ", current->node_num);
+        printf("THIS IS NODE NUMBER: %d    \n", current->node_num);
         while (edge->next != NULL)
         {
             printf("Weight: %d,", edge->weight);
-            printf("To node number: %d,", edge->endpoint->node_num);
+            printf("To node number: %d,\n", edge->endpoint->node_num);
             edge = edge->next;
         }            
         current = current->next;
+        if (current == NULL)
+        {
+            return;
+        }
         if(current->edges != NULL)
         {
+
             edge = current->edges;
         }
         else
         {
             break;
+
         }
 
         printf("\n");
