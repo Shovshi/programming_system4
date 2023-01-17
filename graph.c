@@ -55,19 +55,12 @@ void InsertEdges(pnode head)
     int secondNumber = 0;
     int nodeNumber = 0;
 
-    printf("NODE TO WORK ON:\n");
     scanf(" %d", &nodeNumber);
     pnode curr = Find(nodeNumber, head);
-    if (curr == NULL)
-    {
-        printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-    }
-    //printf("THE NODE IS %d\n", curr->node_num);
     if(curr->edges != NULL)
     {
         FreeEdges(curr->edges);
     }
-    printf("test\n");
 
     pedge graphEdge = NULL;
     graphEdge = malloc(sizeof(edge));
@@ -95,12 +88,10 @@ void InsertEdges(pnode head)
         graphEdge->endpoint->node_num = nodeNumber->node_num;
         graphEdge->weight = secondNumber;
 
-        printf("THIS IS NODENUMBER %d\n", nodeNumber->node_num);
-        printf("THIS IS WEIGHT: %d\n", secondNumber);
         pedge nextEdge = NULL;
         nextEdge = malloc(sizeof(edge));
         nextEdge->endpoint = NULL;
-        nextEdge->next = 0;
+        nextEdge->next = NULL;
         nextEdge->weight = 0;
         if (nextEdge == NULL)
         {
@@ -139,23 +130,6 @@ pnode Find(int number, pnode head)
     }
 }
 
-/*void InsertNode(pnode head)
-{
-    int numOfNode = 0;
-    scanf("%d", &numOfNode);
-    int didExist = 0;
-
-    while (head->next != NULL)
-    {
-        if(head->next->node_num == numOfNode)
-        {
-            didExist = 1;
-            break;
-        }
-        head = head->next;
-    }
-
-}*/
 
 void DeleteNode(pnode head , int nodeToDelete)
 {
@@ -175,11 +149,7 @@ void DeleteNode(pnode head , int nodeToDelete)
             {
                 printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
                 pnode temp2 = temp->next;
-                temp->next = NULL;
-
-               
-                
-
+                temp->next = NULL;                
                 FreeEdges(temp2->edges);
                 free(temp2);
             }
@@ -191,7 +161,54 @@ void DeleteNode(pnode head , int nodeToDelete)
 
 void DeleteEdgesToNode(pnode head , int nodeToDelete)
 {
+    pnode curr = head;
+    pedge edge = NULL;
+    while (curr != NULL)
+    {
+        if(curr->edges == NULL)
+        {
+            curr = curr->next;
+            continue;
+        }
+
+        edge = curr->edges;
+        if (edge->endpoint->node_num == nodeToDelete) // IF THE EDGE TO DELETE IS THE FIRST
+        {
+            if(edge->next == NULL) // IF THE EDGE IS SINGLE WE FREE IT
+            {
+                free(edge);
+            }
+            else // IF THE EDGE ISN'T SINGLE WE CONNECT THE NODE TO THE NEXT EDGE AND FREE THE PREVIOUS ONE
+            {                
+                printf("ELI WAS HERE\n");
+                curr->edges = edge->next;
+                free(edge);
+            }
+        }
+        else
+        {
+            while (edge!= NULL)
+            {
+                if(edge->endpoint == NULL || edge->next == NULL || edge->next->endpoint == NULL)
+                {
+                    break;
+                }
+                if(edge->next->endpoint->node_num == nodeToDelete)
+                {                        
+                    printf("%d\n", edge->next->endpoint->node_num);
+                    pedge tempEdge = edge;
+                    edge->next = NULL;
+                    free(edge->next);
+                }
+                edge = edge->next;
+            }
+            
+        }
+        
+        curr = curr->next;
+    }
     
+
 }
 
 void PrintGraph(pnode head)
@@ -202,10 +219,14 @@ void PrintGraph(pnode head)
     while (current != NULL)
     {
         printf("THIS IS NODE NUMBER: %d    \n", current->node_num);
-        while (edge->next != NULL)
+        while (edge->endpoint != NULL)
         {
             printf("Weight: %d,", edge->weight);
             printf("To node number: %d,\n", edge->endpoint->node_num);
+            if(edge->next == NULL || edge->next == 0)
+            {
+                break;
+            }
             edge = edge->next;
         }            
         current = current->next;

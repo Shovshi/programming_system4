@@ -24,7 +24,6 @@ int main()
             {
                 CreateGraph(head);
             }
-            printf("Everybody was kungfu fightinggggg\n");
         }
         if (choice == 'B')
         {
@@ -34,7 +33,22 @@ int main()
         {
             int nodeToDelete = 0;
             scanf(" %d" , &nodeToDelete);
-            DeleteNode(head , nodeToDelete);
+            if (nodeToDelete == head->node_num)
+            {
+                printf("here\n");
+                pnode temp = head;
+
+                DeleteEdgesToNode(head, nodeToDelete);
+                head = head->next;
+
+                FreeEdges(temp->edges);
+                free(temp);
+            }
+            else
+            {
+                DeleteNode(head , nodeToDelete);
+            }
+           
                        
         }
         if (choice == 'S')
