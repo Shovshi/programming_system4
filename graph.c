@@ -139,7 +139,7 @@ pnode Find(int number, pnode head)
     }
 }
 
-void InsertNode(pnode head)
+/*void InsertNode(pnode head)
 {
     int numOfNode = 0;
     scanf("%d", &numOfNode);
@@ -155,6 +155,43 @@ void InsertNode(pnode head)
         head = head->next;
     }
 
+}*/
+
+void DeleteNode(pnode head , int nodeToDelete)
+{
+    pnode temp = head;
+
+    while (temp != NULL)
+    {
+        if(temp->next == NULL)
+        {
+            printf("1\n");
+            return;
+        }
+        if (temp->next->node_num == nodeToDelete)
+        {
+            printf("found node %d\n" , nodeToDelete);
+            if(temp->next->next == NULL) // IF THE NODE TO DELETE IS THE LAST ONE
+            {
+                printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
+                pnode temp2 = temp->next;
+                temp->next = NULL;
+
+               
+                
+
+                FreeEdges(temp2->edges);
+                free(temp2);
+            }
+        }
+        temp = temp->next;
+    }
+    
+}
+
+void DeleteEdgesToNode(pnode head , int nodeToDelete)
+{
+    
 }
 
 void PrintGraph(pnode head)

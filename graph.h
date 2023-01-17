@@ -32,5 +32,6 @@ void CreateGraph(pnode head);
 void FreeEdges(pedge head);
 void InsertNode(pnode head);
 void PrintGraph(pnode head);
-
+void DeleteNode(pnode head , int nodeToDelete);
+void DeleteEdgesToNode(pnode head , int node);
 #endif

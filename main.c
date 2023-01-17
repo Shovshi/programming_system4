@@ -32,7 +32,10 @@ int main()
         }
         if (choice == 'D')
         {
-            printf("I love shoval\n");
+            int nodeToDelete = 0;
+            scanf(" %d" , &nodeToDelete);
+            DeleteNode(head , nodeToDelete);
+                       
         }
         if (choice == 'S')
         {
@@ -46,8 +49,9 @@ int main()
         {
             InsertEdges(head);
         }
-    }            PrintGraph(head);
-
+    }
+    printf("BEFORE PRINT / FREE \n");
+    PrintGraph(head);
     FreeGraph(head);
     return 0;
 }
