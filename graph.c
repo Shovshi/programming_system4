@@ -1,6 +1,8 @@
 #include "graph.h"
 #include <stdio.h>
 #include <stdlib.h>
+#define MAX __INT32_MAX__
+
 
 void CreateGraph(pnode head)
 {
@@ -207,8 +209,78 @@ void DeleteEdgesToNode(pnode head , int nodeToDelete)
         }
         curr = curr->next;
     }
-    
+}
 
+void Dijkstra(pnode head)
+{
+    int number1 = 0;
+    int number2 = 0;
+
+    pnode curr = head;
+
+    scanf(" %d" , &number1);
+    scanf(" %d", &number2);
+
+   while (curr != NULL)
+   {
+        curr->isVisited = 0;
+        curr->fastestPath = MAX;
+        curr = curr->next;
+   }
+   
+   pnode dijkstra1 = Find(number1 , head);
+   pnode dijkstra2 = Find(number2 , head);
+
+   dijkstra1->fastestPath = 0;
+    curr = dijkstra1;
+    
+   while (curr != NULL)
+   {
+        if(curr->isVisited)
+        {
+            curr = curr->next;
+            continue;
+        }
+        pedge edge = curr->edges;
+        while (edge->endpoint != NULL)
+        {   
+
+            if(edge->endpoint->fastestPath > edge->weight + curr->fastestPath)
+            {
+                edge->endpoint->fastestPath = edge->weight + curr->fastestPath;
+            }
+            if(edge->next == 0)
+            {
+                break;
+            }
+            edge = edge->next;
+        }
+       curr->isVisited = 1;
+       curr = MinimumNeihgbour(curr);  // returns minimum of its neighbors that has not been visited
+   }
+   
+   if(dijkstra2->fastestPath == MAX)
+   {
+        printf("-1\n");
+        return;
+   }
+    printf("%d\n",dijkstra2->fastestPath);
+}
+
+pnode MinimumNeihgbour(pnode node)
+{
+        pnode nodeWithMinimumWeight = NULL;
+        int min = MAX;
+        pedge edge = node->edges;
+        while (edge->endpoint != NULL)
+        {
+            if (edge->endpoint->fastestPath < min && edge->endpoint->isVisited == 0)
+            {
+                nodeWithMinimumWeight = edge->endpoint;
+            }
+            edge = edge->next;
+        }
+        return nodeWithMinimumWeight;
 }
 
 void PrintGraph(pnode head)
@@ -249,3 +321,30 @@ void PrintGraph(pnode head)
     }
 }
 
+void TSP(pnode head)
+{
+    // SCAN AMOUNT OF NODES NEEDED , MALLOC THE MEMORY FOR THEM THEN INSERT
+    int numberOfNodesToTravelThrough = 0;
+    scanf(" %d" , &numberOfNodesToTravelThrough);
+    int * nodeToTraverse = malloc( numberOfNodesToTravelThrough * (sizeof(int)));
+    if(nodeToTraverse == NULL)
+    {
+        exit(1);
+    }
+
+    int tempNode = 0;
+    for (int i = 0; i < numberOfNodesToTravelThrough; i++)
+    {
+        scanf("%d\n" , &tempNode);
+        *(nodeToTraverse + i * (sizeof(int))) = tempNode;
+    }
+    
+    for (int j = 0; j < numberOfNodesToTravelThrough; j++)
+    {
+        printf(" %d\n", *(nodeToTraverse + j * (sizeof(int))));
+    }
+    
+
+    free(nodeToTraverse);
+    printf("here\n");
+}
