@@ -76,8 +76,19 @@ void InsertEdges(pnode head)
 
     while (1)
     {
-        if (scanf(" %d", &firstNumber) == 0)
+        pedge nextEdge = NULL;
+        nextEdge = malloc(sizeof(edge));
+        nextEdge->endpoint = NULL;
+        nextEdge->next = NULL;
+        nextEdge->weight = 0;
+
+        if (nextEdge == NULL)
         {
+            exit(1);
+        }
+        if (scanf(" %d", &firstNumber) == 0)
+        {            
+            free(nextEdge);
             return;
         }
 
@@ -88,18 +99,9 @@ void InsertEdges(pnode head)
         graphEdge->endpoint->node_num = nodeNumber->node_num;
         graphEdge->weight = secondNumber;
 
-        pedge nextEdge = NULL;
-        nextEdge = malloc(sizeof(edge));
-        nextEdge->endpoint = NULL;
-        nextEdge->next = NULL;
-        nextEdge->weight = 0;
-        if (nextEdge == NULL)
-        {
-            exit(1);
-        }
 
         graphEdge->next = nextEdge;
-        graphEdge = nextEdge;
+        graphEdge = graphEdge->next;
     }
 }
 
@@ -193,12 +195,30 @@ void DeleteEdgesToNode(pnode head , int nodeToDelete)
                 {
                     break;
                 }
-                if(edge->next->endpoint->node_num == nodeToDelete)
-                {                        
+               /* if(edge->next->endpoint->node_num == nodeToDelete)
+                {          
+                    printf("here2\n");              
                     printf("%d\n", edge->next->endpoint->node_num);
                     pedge tempEdge = edge;
                     edge->next = NULL;
                     free(edge->next);
+                    break;
+                }*/
+                if(edge->next->endpoint->node_num == nodeToDelete)
+                {
+                    if(edge->next->next->endpoint == NULL) // THE NODE TO DELETE IS THE LAST ONE
+                    {
+                        FreeEdges(edge->next);
+                        edge->next = NULL;
+                    }
+                    else if(edge->next->next->endpoint != NULL) // THE NODE TO DELETE IS NOT THE LAST OR FIRST ONE
+                    {
+                        pedge temp = edge->next;
+                        edge->next = edge->next->next;
+                        FreeEdges(temp);
+                        printf("here6\n");
+                    }
+                    
                 }
                 edge = edge->next;
             }
