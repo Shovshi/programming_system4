@@ -137,25 +137,19 @@ void DeleteNode(pnode head , int nodeToDelete)
 {
     pnode temp = head;
 
-    while (temp != NULL)
-    {
-        if(temp->next == NULL)
+    while (temp->next != NULL)
+    {            
+        if(temp->next->node_num == nodeToDelete)
         {
-            printf("1\n");
-            return;
+            printf("here7\n");
+            pnode temp2 = temp->next;
+            DeleteEdgesToNode(head , nodeToDelete);
+            temp->next = temp->next->next;
+            FreeEdges(temp2->edges);
+            free(temp2);
         }
-        if (temp->next->node_num == nodeToDelete)
-        {
-            printf("found node %d\n" , nodeToDelete);
-            if(temp->next->next == NULL) // IF THE NODE TO DELETE IS THE LAST ONE
-            {
-                printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
-                pnode temp2 = temp->next;
-                temp->next = NULL;                
-                FreeEdges(temp2->edges);
-                free(temp2);
-            }
-        }
+            printf("here8\n");
+
         temp = temp->next;
     }
     
@@ -182,7 +176,6 @@ void DeleteEdgesToNode(pnode head , int nodeToDelete)
             }
             else // IF THE EDGE ISN'T SINGLE WE CONNECT THE NODE TO THE NEXT EDGE AND FREE THE PREVIOUS ONE
             {                
-                printf("ELI WAS HERE\n");
                 curr->edges = edge->next;
                 free(edge);
             }
@@ -195,15 +188,6 @@ void DeleteEdgesToNode(pnode head , int nodeToDelete)
                 {
                     break;
                 }
-               /* if(edge->next->endpoint->node_num == nodeToDelete)
-                {          
-                    printf("here2\n");              
-                    printf("%d\n", edge->next->endpoint->node_num);
-                    pedge tempEdge = edge;
-                    edge->next = NULL;
-                    free(edge->next);
-                    break;
-                }*/
                 if(edge->next->endpoint->node_num == nodeToDelete)
                 {
                     if(edge->next->next->endpoint == NULL) // THE NODE TO DELETE IS THE LAST ONE
@@ -215,16 +199,12 @@ void DeleteEdgesToNode(pnode head , int nodeToDelete)
                     {
                         pedge temp = edge->next;
                         edge->next = edge->next->next;
-                        FreeEdges(temp);
-                        printf("here6\n");
-                    }
-                    
+                        free(temp);
+                    } 
                 }
                 edge = edge->next;
-            }
-            
+            }   
         }
-        
         curr = curr->next;
     }
     
