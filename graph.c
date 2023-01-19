@@ -132,6 +132,8 @@ pnode Find(int number, pnode head)
         }
         curr=curr->next; 
     }
+
+    return NULL;
 }
 
 
