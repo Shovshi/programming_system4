@@ -40,6 +40,8 @@ void DeleteNode(pnode head , int nodeToDelete);
 void DeleteEdgesToNode(pnode head , int node);
 void Dijkstra(pnode head);
 pnode MinimumNeihgbour(pnode node);
+void Swap(int * arr , int start , int i);
+int Permute(int *arr, int start, int end ,pnode head);
 void TSP(pnode head);
-
+int CalculatePath(pnode head,int * arr ,int end);
 #endif

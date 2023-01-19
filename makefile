@@ -1,2 +1,2 @@
 all:
-	gcc -g main.c graph.c graph.h -o test1
+	gcc -g main.c graph.c graph.h -o graph

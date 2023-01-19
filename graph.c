@@ -143,14 +143,12 @@ void DeleteNode(pnode head , int nodeToDelete)
     {            
         if(temp->next->node_num == nodeToDelete)
         {
-            printf("here7\n");
             pnode temp2 = temp->next;
             DeleteEdgesToNode(head , nodeToDelete);
             temp->next = temp->next->next;
             FreeEdges(temp2->edges);
             free(temp2);
         }
-            printf("here8\n");
 
         temp = temp->next;
     }
@@ -261,10 +259,59 @@ void Dijkstra(pnode head)
    
    if(dijkstra2->fastestPath == MAX)
    {
-        printf("-1\n");
+        printf("Dijsktra shortest path: -1\n");
         return;
    }
-    printf("%d\n",dijkstra2->fastestPath);
+    printf("Dijsktra shortest path: %d\n ",dijkstra2->fastestPath);
+}
+
+
+int Dijkstra2(pnode head , int number1 , int number2)
+{
+    pnode curr = head;
+   while (curr != NULL)
+   {
+        curr->isVisited = 0;
+        curr->fastestPath = MAX;
+        curr = curr->next;
+   }
+   
+   pnode dijkstra1 = Find(number1 , head);
+   pnode dijkstra2 = Find(number2 , head);
+
+   dijkstra1->fastestPath = 0;
+    curr = dijkstra1;
+    
+   while (curr != NULL)
+   {
+        if(curr->isVisited)
+        {
+            curr = curr->next;
+            continue;
+        }
+        pedge edge = curr->edges;
+        while (edge->endpoint != NULL)
+        {   
+
+            if(edge->endpoint->fastestPath > edge->weight + curr->fastestPath)
+            {
+                edge->endpoint->fastestPath = edge->weight + curr->fastestPath;
+            }
+            if(edge->next == 0)
+            {
+                break;
+            }
+            edge = edge->next;
+        }
+       curr->isVisited = 1;
+       curr = MinimumNeihgbour(curr);  // returns minimum of its neighbors that has not been visited
+   }
+   
+   if(dijkstra2->fastestPath == MAX)
+   {
+        return -1;
+   }
+    return dijkstra2->fastestPath;
 }
 
 pnode MinimumNeihgbour(pnode node)
@@ -321,6 +368,8 @@ void PrintGraph(pnode head)
     }
 }
 
+int min = MAX;
+
 void TSP(pnode head)
 {
     // SCAN AMOUNT OF NODES NEEDED , MALLOC THE MEMORY FOR THEM THEN INSERT
@@ -332,19 +381,71 @@ void TSP(pnode head)
         exit(1);
     }
 
-    int tempNode = 0;
     for (int i = 0; i < numberOfNodesToTravelThrough; i++)
     {
-        scanf("%d\n" , &tempNode);
-        *(nodeToTraverse + i * (sizeof(int))) = tempNode;
+        scanf(" %d" , (nodeToTraverse + i )); 
     }
     
-    for (int j = 0; j < numberOfNodesToTravelThrough; j++)
-    {
-        printf(" %d\n", *(nodeToTraverse + j * (sizeof(int))));
-    }
-    
-
+    int shortestTSP = Permute(nodeToTraverse , 0 , numberOfNodesToTravelThrough , head);
     free(nodeToTraverse);
-    printf("here\n");
+    min = MAX;
+    if(shortestTSP == MAX)
+    {
+        printf("TSP shortest path: -1\n");
+        return;
+    }
+    printf("TSP shortest path: %d\n" , shortestTSP);
+}
+
+int Permute(int *arr, int start, int end,pnode head)
+{
+    
+    if(start == end) 
+    {
+        int newMin =  MAX;
+        newMin = CalculatePath(head , arr , end);
+        if (newMin == -1)
+        {
+            return min;
+        }
+        else if (newMin < min)
+        {
+            min = newMin;
+        }
+        return min;
+    }
+
+    Permute(arr, start + 1, end , head); 
+    for(int i = start + 1; i < end; i++) 
+    {
+        if( arr[start] == arr[i] ) continue; /* skip */
+	    Swap(arr, start, i);
+	    Permute(arr, start + 1, end , head);
+	    Swap(arr, start, i); /* restore element order */ 
+    }
+
+    return min;
+}
+void Swap(int* arr, int a, int b)
+{
+  int tmp = arr[a];
+  arr[a] = arr[b];
+  arr[b] = tmp;
+}
+
+int CalculatePath(pnode head,int * arr ,int end)
+{
+    int sum = 0;
+    for (int i = 0; i < end - 1; i++)
+    {
+        if ( Dijkstra2(head , arr[i] , arr[i + 1]) == -1)
+        {
+            return MAX;
+        }
+        sum += Dijkstra2(head , arr[i], arr[i + 1]);
+    }
+
+
+    return sum;
+    
 }
