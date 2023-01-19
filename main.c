@@ -55,6 +55,7 @@ int main()
         {
             InsertEdges(head);
         }
+        printf("\n");
     }
     //printf("BEFORE PRINT / FREE \n");
     //PrintGraph(head);

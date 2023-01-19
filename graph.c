@@ -264,10 +264,10 @@ void Dijkstra(pnode head)
    
    if(dijkstra2->fastestPath == MAX)
    {
-        printf("Dijsktra shortest path: -1 \n");
+        printf("Dijsktra shortest path: -1 ");
         return;
    }
-    printf("Dijsktra shortest path: %d \n ",dijkstra2->fastestPath);
+    printf("Dijsktra shortest path: %d  ",dijkstra2->fastestPath);
 }
 
 
@@ -396,10 +396,10 @@ void TSP(pnode head)
     min = MAX;
     if(shortestTSP == MAX)
     {
-        printf("TSP shortest path: -1\n");
+        printf("TSP shortest path: -1 ");
         return;
     }
-    printf("TSP shortest path: %d \n" , shortestTSP);
+    printf("TSP shortest path: %d " , shortestTSP);
 }
 
 int Permute(int *arr, int start, int end,pnode head)
