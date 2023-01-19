@@ -46,16 +46,19 @@ int main()
         if (choice == 'S')
         {
             Dijkstra(head);
+            printf("\n");
+
         }
         if (choice == 'T')
         {
             TSP(head);
+            printf("\n");
+
         }
         if (choice == 'n')
         {
             InsertEdges(head);
         }
-        printf("\n");
     }
     //printf("BEFORE PRINT / FREE \n");
     //PrintGraph(head);
