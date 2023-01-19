@@ -264,10 +264,10 @@ void Dijkstra(pnode head)
    
    if(dijkstra2->fastestPath == MAX)
    {
-        printf("Dijsktra shortest path: -1 ");
+        printf("Dijsktra shortest path: -1 \n");
         return;
    }
-    printf("Dijsktra shortest path: %d  ",dijkstra2->fastestPath);
+    printf("Dijsktra shortest path: %d  \n",dijkstra2->fastestPath);
 }
 
 
@@ -342,11 +342,11 @@ void PrintGraph(pnode head)
 
     while (current != NULL)
     {
-        printf("THIS IS NODE NUMBER: %d    \n", current->node_num);
+        // printf("THIS IS NODE NUMBER: %d    \n", current->node_num);
         while (edge->endpoint != NULL)
         {
-            printf("Weight: %d,", edge->weight);
-            printf("To node number: %d,\n", edge->endpoint->node_num);
+            // printf("Weight: %d,", edge->weight);
+            // printf("To node number: %d,\n", edge->endpoint->node_num);
             if(edge->next == NULL || edge->next == 0)
             {
                 break;
@@ -369,7 +369,7 @@ void PrintGraph(pnode head)
 
         }
 
-        printf("\n");
+        // printf("\n");
     }
 }
 
@@ -396,10 +396,10 @@ void TSP(pnode head)
     min = MAX;
     if(shortestTSP == MAX)
     {
-        printf("TSP shortest path: -1 ");
+        printf("TSP shortest path: -1 \n");
         return;
     }
-    printf("TSP shortest path: %d " , shortestTSP);
+    printf("TSP shortest path: %d \n" , shortestTSP);
 }
 
 int Permute(int *arr, int start, int end,pnode head)

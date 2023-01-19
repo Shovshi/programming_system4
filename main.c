@@ -46,13 +46,13 @@ int main()
         if (choice == 'S')
         {
             Dijkstra(head);
-            printf("\n");
+            // printf("\n");
 
         }
         if (choice == 'T')
         {
             TSP(head);
-            printf("\n");
+            // printf("\n");
 
         }
         if (choice == 'n')
