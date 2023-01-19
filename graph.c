@@ -267,7 +267,7 @@ void Dijkstra(pnode head)
         printf("Dijsktra shortest path: -1 \n");
         return;
    }
-    printf("Dijsktra shortest path: %d  \n",dijkstra2->fastestPath);
+    printf("Dijsktra shortest path: %d \n",dijkstra2->fastestPath);
 }
 
 
