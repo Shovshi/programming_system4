@@ -21,15 +21,9 @@ typedef struct GRAPH_NODE_
     struct GRAPH_NODE_ *next;
 } node, *pnode;
 
-void insert_node_cmd(pnode *head);
-void delete_node_cmd(pnode *head);
-void printGraph_cmd(pnode head); // for self debug
-void deleteGraph_cmd(pnode *head);
-void shortsPath_cmd(pnode head);
-void TSP_cmd(pnode head);
 
-pnode Find(int number , pnode head);
-pnode MinimumNeihgbour(pnode Node);
+pnode Find(int number , pnode head); // find the pointer to a certain node
+pnode MinimumNeihgbour(pnode Node); // returns pointer to neighbour with lowest weight
 void InsertEdges(pnode head);
 void FreeGraph(pnode head);
 void CreateGraph(pnode head);

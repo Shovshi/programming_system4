@@ -425,10 +425,13 @@ int Permute(int *arr, int start, int end,pnode head)
     Permute(arr, start + 1, end , head); 
     for(int i = start + 1; i < end; i++) 
     {
-        if( arr[start] == arr[i] ) continue; /* skip */
+        if( arr[start] == arr[i])
+        {
+            continue;
+        } 
 	    Swap(arr, start, i);
 	    Permute(arr, start + 1, end , head);
-	    Swap(arr, start, i); /* restore element order */ 
+	    Swap(arr, start, i); 
     }
 
     return min;
