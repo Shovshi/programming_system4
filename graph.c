@@ -370,9 +370,7 @@ void PrintGraph(pnode head)
             break;
 
         }
-
-        // printf("\n");
-    }
+     }
 }
 
 int min = MAX;
