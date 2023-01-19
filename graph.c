@@ -391,7 +391,7 @@ void TSP(pnode head)
     min = MAX;
     if(shortestTSP == MAX)
     {
-        printf("TSP shortest path: -1\ n");
+        printf("TSP shortest path: -1 \n");
         return;
     }
     printf("TSP shortest path: %d \n" , shortestTSP);
