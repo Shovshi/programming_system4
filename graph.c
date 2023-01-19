@@ -138,19 +138,19 @@ pnode Find(int number, pnode head)
 void DeleteNode(pnode head , int nodeToDelete)
 {
     pnode temp = head;
-
     while (temp->next != NULL)
-    {            
+    {     
+
         if(temp->next->node_num == nodeToDelete)
         {
-            pnode temp2 = temp->next;
-            DeleteEdgesToNode(head , nodeToDelete);
+            pnode temp2 = temp->next;     
+            DeleteEdgesToNode(head , nodeToDelete);       
             temp->next = temp->next->next;
             FreeEdges(temp2->edges);
             free(temp2);
         }
-
         temp = temp->next;
+
     }
     
 }
@@ -168,6 +168,10 @@ void DeleteEdgesToNode(pnode head , int nodeToDelete)
         }
 
         edge = curr->edges;
+        if(edge->endpoint == NULL)
+        {
+            break;
+        }
         if (edge->endpoint->node_num == nodeToDelete) // IF THE EDGE TO DELETE IS THE FIRST
         {
             if(edge->next == NULL) // IF THE EDGE IS SINGLE WE FREE IT
@@ -178,6 +182,7 @@ void DeleteEdgesToNode(pnode head , int nodeToDelete)
             {                
                 curr->edges = edge->next;
                 free(edge);
+
             }
         }
         else

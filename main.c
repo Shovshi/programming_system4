@@ -15,6 +15,7 @@ int main()
         printf("Malloc failed\n");
         return -1;
     }
+
     while (scanf("%c", &choice) != EOF)
     {
         if (choice == 'A')
